@@ -1,0 +1,32 @@
+{
+    "files.defaultLanguage": "cpp", 
+    "editor.formatOnType": true, 
+    "editor.snippetSuggestions": "top",
+    "code-runner.runInTerminal": true,
+    "code-runner.executorMap": {
+      "c": "cd $dir && clang $fileName -o $fileNameWithoutExt.exe -Wall -g -Og -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c11 && $dir$fileNameWithoutExt",
+      "cpp": "cd $dir && clang++ $fileName -o $fileNameWithoutExt.exe -Wall -g -Og  -static-libgcc -fcolor-diagnostics --target=x86_64-w64-mingw -std=c++17 -I x86_64-w64-mingw32_SDL/include/SDL2 -L x86_64-w64-mingw32_SDL/lib -lmingw32 -lSDL2main -lSDL2 && $dir$fileNameWithoutExt"
+    }, 
+    "code-runner.saveFileBeforeRun": true, 
+    "code-runner.preserveFocus": true, 
+    "code-runner.clearPreviousOutput": false, 
+    "C_Cpp.clang_format_sortIncludes": true,
+    "C_Cpp.intelliSenseEngine": "Default", 
+    "C_Cpp.errorSquiggles": "Disabled", 
+    "C_Cpp.autocomplete": "Disabled",
+    "clang.cflags": [
+      "--target=x86_64-w64-mingw",
+      "-std=c11",
+      "-Wall"
+    ],
+    "clang.cxxflags": [ 
+      "--target=x86_64-w64-mingw",
+      "-std=c++17",
+      "-Wall",
+      "-Ix86_64-w64-mingw32/include/SDL2/",
+      "-Lx86_64-w64-mingw32/include/lib/",
+      "-lSDL2", 
+      "-lSDL2main"
+    ],
+    "clang.completion.enable": true 
+  }

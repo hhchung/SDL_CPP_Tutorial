@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "name": "MinGW",
+      "intelliSenseMode": "clang-x64",
+      "compilerPath": "C:/LLVM/bin/gcc.exe",
+      "includePath": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/x86_64-w64-mingw32_SDL/include/SDL2"
+      ],
+      "defines": [],
+      "browse": {
+        "path": [
+          "${workspaceFolder}"
+        ],
+        "limitSymbolsToIncludedHeaders": true,
+        "databaseFilename": ""
+      },
+      "cStandard": "c11",
+      "cppStandard": "c++17"
+    }
+  ],
+  "version": 4
+}

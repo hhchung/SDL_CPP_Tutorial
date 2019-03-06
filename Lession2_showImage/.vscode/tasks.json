@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Compile", 
+        "command": "clang++", 
+        "args": [
+          "${file}",
+          "-o",
+          "${fileDirname}/${fileBasenameNoExtension}.exe",
+          "-g", 
+          "-Wall",
+          "-fcolor-diagnostics",
+          "--target=x86_64-w64-mingw", 
+          "-std=c++17",
+          "-I${workspaceFolder}/x86_64-w64-mingw32_SDL/include/SDL2",
+          "-L${workspaceFolder}/x86_64-w64-mingw32_SDL/lib",
+          "-lmingw32",
+          "-lSDL2main",
+          "-lSDL2"
+        ], 
+        "type": "shell", 
+        "group": {
+          "kind": "build",
+          "isDefault": true 
+        },
+        "presentation": {
+          "echo": true,
+          "reveal": "always", 
+          "focus": false, 
+          "panel": "shared" 
+        }
+      }
+    ]
+  }

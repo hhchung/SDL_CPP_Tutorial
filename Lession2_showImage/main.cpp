@@ -1,7 +1,6 @@
 #include <SDL.h>
 #include <stdio.h>
-#define ERR(fmt, ...) fprintf(stderr, __VA_ARGS__"\n" )
-
+#define ERR(fmt, ...) fprintf(stderr, fmt "\n", ##__VA_ARGS__)
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -19,59 +18,74 @@ SDL_Window *gWindow = NULL;
 SDL_Surface *gScreenSurface = NULL;
 SDL_Surface *gBMPFile = NULL;
 
-int main( int argc, char* args[] ){
-	SDL_Window* window = NULL;
-	
-	//The surface contained by the window
-	SDL_Surface* screenSurface = NULL;
-
-	//Initialize SDL
-	if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+int main(int argc, char *args[])
+{
+	ERR("err test");
+	printf("Hello testing\n");
+	if (!init())
 	{
-		printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+		ERR("Failed to initialize!");
+	}
+	if (!loadMedia())
+	{
+		ERR("Failed to load media!");
 	}
 	else
 	{
-		//Create window
-		window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-		if( window == NULL )
+		//render to back buffer
+		SDL_BlitSurface(gBMPFile, NULL, gScreenSurface, NULL);
+		//update the back buffer to front
+		SDL_UpdateWindowSurface(gWindow);
+		SDL_Delay(2000);
+	}
+	printf("Close program\n");
+	close();
+	return 0;
+}
+bool init()
+{
+	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	{
+		ERR("SDL could not initialize SDL_Error:%s", SDL_GetError());
+		return false; //init fail
+	}else{
+		gWindow = SDL_CreateWindow( "SDL load bmp file", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
+		if( gWindow == NULL )
 		{
-			printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+			ERR( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+			return false;
 		}
 		else
 		{
 			//Get window surface
-			screenSurface = SDL_GetWindowSurface( window );
-
-			//Fill the surface white
-			SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0x00, 0xFF, 0xFF ) );
-			
-			//Update the surface
-			SDL_UpdateWindowSurface( window );
-
-		 	//Wait two seconds
-			SDL_Delay( 2000 );
+			gScreenSurface = SDL_GetWindowSurface( gWindow );
 		}
+		return true;
 	}
 
-	//Destroy window
-	SDL_DestroyWindow( window );
-
-	//Quit SDL subsystems
-	SDL_Quit();
-	return 0;
-}
-bool init(){
-	if (SDL_Init(SDL_INIT_VIDEO) < 0){
-		ERR("SDL could not initialize SDL_Error:%s", SDL_GetError());
-		return false; //init fail
-	}
 	//Get the surface in the window
 	gScreenSurface = SDL_GetWindowSurface(gWindow);
-	return success;
+	return true;
 }
 
-bool loadMedia(){
-	gBMPFile = SDL_LoadBMP();
+bool loadMedia()
+{
+	gBMPFile = SDL_LoadBMP("snoopy.bmp");
+	if (gBMPFile == NULL)
+	{
+		ERR("Unable to load image %s SDL Error %s", "snoopy.bmp", SDL_GetError);
+		return false;
+	}
+	return true;
+}
 
+void close()
+{
+	SDL_FreeSurface(gBMPFile); //allocate memory with SDL_LoadBMP
+	gBMPFile = NULL;
+
+	SDL_DestroyWindow(gWindow);
+	gWindow = NULL;
+
+	SDL_Quit();
 }

@@ -20,8 +20,7 @@ SDL_Surface *gBMPFile = NULL;
 
 int main(int argc, char *args[])
 {
-	ERR("err test");
-	printf("Hello testing\n");
+	
 	if (!init())
 	{
 		ERR("Failed to initialize!");
